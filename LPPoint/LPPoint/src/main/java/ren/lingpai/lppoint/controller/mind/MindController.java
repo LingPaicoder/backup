@@ -15,7 +15,7 @@ import ren.lingpai.lputil.collection.CollectionUtil;
  * @author liurenpeng
  * @date Created in 19-4-4
  */
-@Controller("mind")
+@Controller("/mind")
 public class MindController {
 
     @Inject
