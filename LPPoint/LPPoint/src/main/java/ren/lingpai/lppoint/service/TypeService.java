@@ -13,10 +13,31 @@ import java.util.List;
 public class TypeService {
 
     /**
-     * 获取Type列表
-     * @return
+     * 获取父ID获取Type列表
      */
-    public List<TypeDO> getTypeList(){
+    public List<TypeDO> getListByPid(Integer pid) {
+        String sql = "SELECT " +
+                " m_id as id , m_pid as pId , m_topic as topic , m_direction as direction " +
+                " , m_expanded as expanded " +
+                " FROM t_type where m_pid = ? ";
+        return DataBasePart.queryEntityList(TypeDO.class, sql, pid);
+    }
+
+    /**
+     * 获取ID获取Type
+     */
+    public TypeDO getById(Integer id) {
+        String sql = "SELECT " +
+                " m_id as id , m_pid as pId , m_topic as topic , m_direction as direction " +
+                " , m_expanded as expanded " +
+                " FROM t_type where m_id = ? ";
+        return DataBasePart.queryEntity(TypeDO.class, sql, id);
+    }
+
+    /**
+     * 获取Type列表
+     */
+    public List<TypeDO> getTypeList() {
         String sql = "SELECT " +
                 " m_id as id , m_pid as pId , m_topic as topic , m_direction as direction " +
                 " , m_expanded as expanded " +

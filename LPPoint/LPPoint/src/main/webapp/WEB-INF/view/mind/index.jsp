@@ -42,50 +42,7 @@
 
     </head>
     <body id="skin-tectile">
-        <div class="user-header" id="ban">
-            <div class="container">
-
-                <div class="animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
-                    <nav class="navbar" style="margin-bottom: 0;">
-
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
-
-                            <nav class="link-effect-7" id="link-effect-7">
-                                <ul class="nav navbar-nav" style="float: left;">
-                                    <li class="active act"><a href="/visitor_index/index_view"><h4>灵派coder&nbsp;|&nbsp;知识点&nbsp;LPPoint</h4></a></li>
-                                </ul>
-
-                                <ul class="nav navbar-nav" style="float: right;">
-                                    <li><a href="/visitor_article/article_waterfall_view"><h4>最新</h4></a></li>
-                                    <li><a href="/visitor_article/article_waterfall_view?typeid=10"><h4>框架</h4></a></li>
-                                    <li><a href="/visitor_article/article_waterfall_view?typeid=11"><h4>项目</h4></a></li>
-                                    <li><a href="/visitor_message/message_view"><h4>留言</h4></a></li>
-                                    <li><a href="/visitor_about/about_view"><h4>关于</h4></a></li>
-                                    <li>
-                                        <security:guest>
-                                            <a href="/login_view"><h4>登录</h4></a>
-                                        </security:guest>
-
-                                        <security:user>
-                                            <a href="#"><h4>欢迎：${currentUser.username}</h4></a>
-                                        </security:user>
-
-                                    </li>
-                                    <li><input type="text" class="main-search" style="position: relative;top: 18px;margin-left: 20px;"></li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <!-- /.navbar-collapse -->
-                    </nav>
-                </div>
-            </div>
-        </div>
-        <hr class="whiter">
-
         <div id="jsmind_container"></div>
-
-
         <!-- Javascript Libraries -->
         <!-- jQuery -->
         <script src="${BASE}/asset/js/jquery.min.js"></script> <!-- jQuery Library -->
@@ -122,7 +79,6 @@
                 "format":"node_array",
                 /* 数据内容 */
                 "data":[
-                    {"id":"1","isroot":true, "background-image":"${BASE}/asset/img/code.jpg", "width": "100", "height": "100"},
                     ${typeStr}
                 ]
             };
@@ -147,24 +103,34 @@
 
                 if(null != jm.get_selected_node() && 1 != jm.get_selected_node().id && tempId != jm.get_selected_node().id){
                     $.ajax({
-                        type: "post",
+                        type: "get",
                         dataType: "json",
                         async: "false",
-                        url: "/visitor_index/get_article_num",
+                        url: "/mind/sonNum",
                         data: {
-                            typeid : jm.get_selected_node().id
+                            pId : jm.get_selected_node().id
                         },
                         success: function (data){
                             if(data > 0){
-                                if(true == confirm("是否查看" + "\"" +jm.get_selected_node().topic + "\"" + "下的内容？")){
-                                    tempId = 1;
-                                    location.href = "/visitor_article/article_waterfall_view?typeid=" + jm.get_selected_node().id ;
-                                }else {
-                                    tempId = jm.get_selected_node().id;
-                                }
+                                location.href = "/mind/index?pId=" + jm.get_selected_node().id ;
                             }else {
-                                tempId = jm.get_selected_node().id;
-                                alert("\"" + jm.get_selected_node().topic + "\"" + "下暂无内容，敬请期待！");
+                                $.ajax({
+                                    type: "get",
+                                    dataType: "json",
+                                    async: "false",
+                                    url: "/mind/articleNum",
+                                    data: {
+                                        pId : jm.get_selected_node().id
+                                    },
+                                    success: function (data){
+                                        if(data > 0){
+                                            location.href = "/article/list?typeId=" + jm.get_selected_node().id ;
+                                        }else {
+                                            tempId = jm.get_selected_node().id;
+                                            alert("\"" + jm.get_selected_node().topic + "\"" + "下暂无内容，敬请期待！");
+                                        }
+                                    }
+                                })
                             }
                         }
                     })
