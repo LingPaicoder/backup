@@ -1,0 +1,5 @@
+**/.idea/
+*.class`
+LPUtil/LPUtil/target/
+LPAgile_plugin_security/target/
+LPAgile/target/
