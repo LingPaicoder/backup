@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import ren.lingpai.lpagile.annotation.Action;
@@ -18,6 +19,7 @@ import ren.lingpai.lppoint.service.ArticleService;
 import ren.lingpai.lppoint.service.MessageService;
 import ren.lingpai.lppoint.service.MindArticleService;
 import ren.lingpai.lppoint.util.PageParam;
+import ren.lingpai.lppoint.util.RandomUtil;
 import ren.lingpai.lputil.collection.CollectionUtil;
 
 /**
@@ -36,9 +38,22 @@ public class ArticleController {
      */
     @Get
     @Action("/list")
-    public LPView articleWaterFallView(Integer typeId){
+    public LPView list(Integer typeId){
         List<MindArticleDO> articleList =articleService.getArticleListByType(typeId);
         return new LPView("mind/list.jsp").addModel("articleList",articleList);
+    }
+
+    /**
+     * 随机好文
+     */
+    @Get
+    @Action("/random")
+    public LPView random(){
+        List<MindArticleDO> articleList =articleService.getStarArticleList();
+        int size = articleList.size();
+        int index = RandomUtil.nextInt(0,size);
+        return new LPView("mind/list.jsp").addModel("articleList",
+                Collections.singletonList(articleList.get(index)));
     }
 
 }
