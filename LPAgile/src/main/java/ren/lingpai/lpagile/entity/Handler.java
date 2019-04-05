@@ -32,9 +32,6 @@ public class Handler {
      */
     private List<String> paramNames;
 
-
-
-
     public Handler(Class<?> controllerClass,Method actionMethod){
         this.controllerClass = controllerClass;
         this.actionMethod = actionMethod;
@@ -78,4 +75,13 @@ public class Handler {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Handler{" +
+                "controllerClass=" + controllerClass.getName() +
+                ", actionMethod=" + actionMethod.getName() +
+                ", paramTypes=" + paramTypes +
+                ", paramNames=" + paramNames +
+                '}';
+    }
 }

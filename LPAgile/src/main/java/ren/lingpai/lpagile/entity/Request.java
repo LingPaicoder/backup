@@ -43,4 +43,11 @@ public class Request {
         return EqualsBuilder.reflectionEquals(this,obj);
     }
 
+    @Override
+    public String toString() {
+        return "Request{" +
+                "requestMethod='" + requestMethod + '\'' +
+                ", requestPath='" + requestPath + '\'' +
+                '}';
+    }
 }
