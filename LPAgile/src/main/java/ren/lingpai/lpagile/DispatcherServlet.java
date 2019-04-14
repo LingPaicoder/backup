@@ -2,11 +2,11 @@ package ren.lingpai.lpagile;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ren.lingpai.lpagile.entity.*;
-import ren.lingpai.lpagile.part.*;
-import ren.lingpai.lputil.json.JsonUtil;
-import ren.lingpai.lputil.reflect.ReflectionUtil;
-import ren.lingpai.lputil.string.StringUtil;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.lang.reflect.Method;
+import java.util.Map;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -16,10 +16,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.lang.reflect.Method;
-import java.util.Map;
+
+import ren.lingpai.lpagile.entity.Handler;
+import ren.lingpai.lpagile.entity.LPData;
+import ren.lingpai.lpagile.entity.LPView;
+import ren.lingpai.lpagile.entity.RequestParam;
+import ren.lingpai.lpagile.part.ActionMappingPart;
+import ren.lingpai.lpagile.part.BeanContainerPart;
+import ren.lingpai.lpagile.part.ConfigPart;
+import ren.lingpai.lpagile.part.ContextPart;
+import ren.lingpai.lpagile.part.RequestPart;
+import ren.lingpai.lpagile.part.UploadPart;
+import ren.lingpai.lpagile.part.ValueBindPart;
+import ren.lingpai.lputil.json.JsonUtil;
+import ren.lingpai.lputil.reflect.ReflectionUtil;
+import ren.lingpai.lputil.string.StringUtil;
 
 /**
  * 请求转发器
