@@ -69,15 +69,19 @@ public final class DataBasePart {
      */
     public static Connection getConnection() {
         Connection conn = CONNECTION_HOLDER.get();
-        if (null == conn) {
-            try {
-                conn = DATA_SOURCE.getConnection();
-            } catch (SQLException e) {
-                LOGGER.error("get connection failure", e);
-                throw new RuntimeException(e);
-            } finally {
-                CONNECTION_HOLDER.set(conn);
+        try {
+            if (null == conn || conn.isClosed()) {
+                try {
+                    conn = DATA_SOURCE.getConnection();
+                } catch (SQLException e) {
+                    LOGGER.error("get connection failure", e);
+                    throw new RuntimeException(e);
+                } finally {
+                    CONNECTION_HOLDER.set(conn);
+                }
             }
+        } catch (Exception e) {
+            LOGGER.error("getConnection error.", e);
         }
         return conn;
     }
